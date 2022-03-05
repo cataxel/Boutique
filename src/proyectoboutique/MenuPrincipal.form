@@ -30,7 +30,7 @@
             <Property name="text" type="java.lang.String" value="Contacto"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuContactoActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuContactoMouseClicked"/>
           </Events>
         </Menu>
       </SubComponents>

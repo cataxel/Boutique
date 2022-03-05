@@ -143,16 +143,19 @@ public class MenuPrincipalCaballeros extends javax.swing.JFrame {
     private void btnSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuperiorActionPerformed
        CaballerosSuperior cs=new CaballerosSuperior();
        cs.setVisible(true);
+       dispose();
     }//GEN-LAST:event_btnSuperiorActionPerformed
 
     private void btnInferiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInferiorActionPerformed
         CaballerosInferior ci=new CaballerosInferior();
         ci.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnInferiorActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros();
-        mpc.setVisible(true);
+        MenuPrincipal mp=new MenuPrincipal();
+        mp.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**

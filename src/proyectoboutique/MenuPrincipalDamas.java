@@ -128,16 +128,19 @@ public class MenuPrincipalDamas extends javax.swing.JFrame {
     private void DamasInferiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DamasInferiorActionPerformed
         DamasSuperior ds=new DamasSuperior();
         ds.setVisible(true);
+        dispose();
     }//GEN-LAST:event_DamasInferiorActionPerformed
 
     private void DamasSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DamasSuperiorActionPerformed
         DamasInferior di=new DamasInferior();
         di.setVisible(true);
+        dispose();
     }//GEN-LAST:event_DamasSuperiorActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         MenuPrincipal mp=new MenuPrincipal();
         mp.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**

@@ -16,7 +16,7 @@ public class ProyectoBoutique {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        MenuPrincipal mp=new MenuPrincipal();
+        MenuPrincipal mp = new MenuPrincipal();
         mp.setVisible(true);
     }
     

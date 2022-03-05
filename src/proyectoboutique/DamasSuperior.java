@@ -112,6 +112,7 @@ public class DamasSuperior extends javax.swing.JFrame {
     private void btnRegrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegrearActionPerformed
         MenuPrincipalDamas mpd=new MenuPrincipalDamas();
         mpd.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnRegrearActionPerformed
 
     /**

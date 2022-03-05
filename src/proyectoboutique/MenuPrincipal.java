@@ -117,9 +117,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuBar.add(menuCaballero);
 
         menuContacto.setText("Contacto");
-        menuContacto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuContactoActionPerformed(evt);
+        menuContacto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuContactoMouseClicked(evt);
             }
         });
         menuBar.add(menuContacto);
@@ -143,27 +143,32 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnDamasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDamasActionPerformed
         MenuPrincipalDamas mpd=new MenuPrincipalDamas();
         mpd.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnDamasActionPerformed
 
     private void btnCaballerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaballerosActionPerformed
         MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros();
         mpc.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnCaballerosActionPerformed
 
     private void menuDamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDamaActionPerformed
         MenuPrincipalDamas mpd=new MenuPrincipalDamas();
         mpd.setVisible(true);
+        dispose();
     }//GEN-LAST:event_menuDamaActionPerformed
 
     private void menuCaballeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCaballeroActionPerformed
         MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros();
         mpc.setVisible(true);
+        dispose();
     }//GEN-LAST:event_menuCaballeroActionPerformed
 
-    private void menuContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuContactoActionPerformed
+    private void menuContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuContactoMouseClicked
         Contacto contacto=new Contacto();
         contacto.setVisible(true);
-    }//GEN-LAST:event_menuContactoActionPerformed
+        dispose();
+    }//GEN-LAST:event_menuContactoMouseClicked
 
     /**
      * @param args the command line arguments

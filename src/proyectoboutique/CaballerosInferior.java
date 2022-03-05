@@ -111,6 +111,7 @@ public class CaballerosInferior extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
       MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros();
         mpc.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
