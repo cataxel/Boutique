@@ -6,6 +6,8 @@ package proyectoboutique;
 
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
+import javax.swing.JOptionPane;
+import proyectoboutique.db.Conexion;
 
 /**
  *
@@ -70,6 +72,11 @@ public class AgregarCRopa extends javax.swing.JFrame {
         });
 
         jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +151,7 @@ public class AgregarCRopa extends javax.swing.JFrame {
                                         .addGap(8, 8, 8)
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                                        .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 236, Short.MAX_VALUE))))
                             .addComponent(talla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -203,6 +210,17 @@ public class AgregarCRopa extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Conexion conn = Conexion.getinstancia();
+        try
+        {
+            conn.Conectar();
+        }
+        catch(ClassNotFoundException e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments
