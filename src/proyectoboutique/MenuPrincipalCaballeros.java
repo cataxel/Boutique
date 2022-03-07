@@ -5,6 +5,8 @@
  */
 package proyectoboutique;
 
+import logica.Usuario;
+
 /**
  *
  * @author Intecom
@@ -14,7 +16,9 @@ public class MenuPrincipalCaballeros extends javax.swing.JFrame {
     /**
      * Creates new form MenuPrincipalCaballeros
      */
-    public MenuPrincipalCaballeros() {
+    private Usuario user;
+    public MenuPrincipalCaballeros(Usuario modser) {
+        this.user=modser;
         initComponents();
     }
 
@@ -141,19 +145,19 @@ public class MenuPrincipalCaballeros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuperiorActionPerformed
-       CaballerosSuperior cs=new CaballerosSuperior();
+       CaballerosSuperior cs=new CaballerosSuperior(user);
        cs.setVisible(true);
        dispose();
     }//GEN-LAST:event_btnSuperiorActionPerformed
 
     private void btnInferiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInferiorActionPerformed
-        CaballerosInferior ci=new CaballerosInferior();
+        CaballerosInferior ci=new CaballerosInferior(user);
         ci.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnInferiorActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        MenuPrincipal mp=new MenuPrincipal();
+        MenuPrincipal mp=new MenuPrincipal(user);
         mp.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -188,7 +192,7 @@ public class MenuPrincipalCaballeros extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuPrincipalCaballeros().setVisible(true);
+                new MenuPrincipalCaballeros(null).setVisible(true);
             }
         });
     }

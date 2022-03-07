@@ -5,17 +5,58 @@
  */
 package proyectoboutique;
 
+import logica.Usuario;
+
 /**
  *
  * @author Intecom
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuPrincipal
-     */
-    public MenuPrincipal() {
+    public static InicioSesion frmLog;
+    public static Crear_Cuenta frmReg;
+    Usuario mod;
+    
+       
+    public MenuPrincipal(Usuario modusr)
+    {
         initComponents();
+        if(modusr!=null){
+            this.mod=modusr;
+
+            //Usuario ya inicio sesion y checas que permisos perimiso tiene
+            //es decir todos los if que tiene con mod.getIDtipo
+            if(mod.getId_tipo()==1){
+                submenuInicioSesion.setVisible(false);
+                submenuRegistrar.setVisible(false);
+            }
+            else{
+                if(mod.getId_tipo()==2)
+                {
+                    menuProovedores.setVisible(false);
+                    menuRopaAd.setVisible(false);
+                    submenuInicioSesion.setVisible(false);
+                    submenuRegistrar.setVisible(false);
+                    //tambien se puede apilcar a submenus
+                }else
+                {
+                    if(mod.getId_tipo()!=1 && mod.getId_tipo()!=2)
+                    {
+                        menuProovedores.setVisible(false);
+                        menuRopaAd.setVisible(false);
+                    }
+                }
+            }
+        }
+        else{
+        menuProovedores.setVisible(false);
+        menuRopaAd.setVisible(false);
+        submenuInfoUsuario.setVisible(false);
+            //mod aun no ha iniciado sesion y unicamente vas a mostrar los paneles o 
+            // o opciones que no requieres de que el mod este inicializado
+           
+        }
+        
     }
 
     /**
@@ -38,6 +79,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuDama = new javax.swing.JMenu();
         menuCaballero = new javax.swing.JMenu();
         menuContacto = new javax.swing.JMenu();
+        menuusuario = new javax.swing.JMenu();
+        submenuInicioSesion = new javax.swing.JMenuItem();
+        submenuRegistrar = new javax.swing.JMenuItem();
+        submenuInfoUsuario = new javax.swing.JMenuItem();
+        menuRopaAd = new javax.swing.JMenu();
+        submenuAgregar = new javax.swing.JMenuItem();
+        submenu2 = new javax.swing.JMenuItem();
+        menuProovedores = new javax.swing.JMenu();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -124,6 +173,47 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         menuBar.add(menuContacto);
 
+        menuusuario.setText("Usuario");
+        menuusuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuusuarioActionPerformed(evt);
+            }
+        });
+
+        submenuInicioSesion.setText("Iniciar sesión");
+        submenuInicioSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuInicioSesionActionPerformed(evt);
+            }
+        });
+        menuusuario.add(submenuInicioSesion);
+
+        submenuRegistrar.setText("Registrarse");
+        submenuRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuRegistrarActionPerformed(evt);
+            }
+        });
+        menuusuario.add(submenuRegistrar);
+
+        submenuInfoUsuario.setText("Informacion del usuario");
+        menuusuario.add(submenuInfoUsuario);
+
+        menuBar.add(menuusuario);
+
+        menuRopaAd.setText("Ropa");
+
+        submenuAgregar.setText("Agregar Ropa");
+        menuRopaAd.add(submenuAgregar);
+
+        submenu2.setText("Algo");
+        menuRopaAd.add(submenu2);
+
+        menuBar.add(menuRopaAd);
+
+        menuProovedores.setText("Proovedores");
+        menuBar.add(menuProovedores);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -141,34 +231,54 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDamasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDamasActionPerformed
-        MenuPrincipalDamas mpd=new MenuPrincipalDamas();
+        MenuPrincipalDamas mpd=new MenuPrincipalDamas(mod);
         mpd.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnDamasActionPerformed
 
     private void btnCaballerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaballerosActionPerformed
-        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros();
+        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros(mod);
         mpc.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCaballerosActionPerformed
 
     private void menuDamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDamaActionPerformed
-        MenuPrincipalDamas mpd=new MenuPrincipalDamas();
+        MenuPrincipalDamas mpd=new MenuPrincipalDamas(mod);
         mpd.setVisible(true);
         dispose();
     }//GEN-LAST:event_menuDamaActionPerformed
 
     private void menuCaballeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCaballeroActionPerformed
-        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros();
+        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros(mod);
         mpc.setVisible(true);
         dispose();
     }//GEN-LAST:event_menuCaballeroActionPerformed
 
     private void menuContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuContactoMouseClicked
-        Contacto contacto=new Contacto();
+        Contacto contacto=new Contacto(mod);
         contacto.setVisible(true);
         dispose();
     }//GEN-LAST:event_menuContactoMouseClicked
+
+    private void submenuRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuRegistrarActionPerformed
+        if(frmReg == null)
+        {
+           frmReg = new Crear_Cuenta();
+           frmReg.setVisible(true);
+        }
+    }//GEN-LAST:event_submenuRegistrarActionPerformed
+
+    private void submenuInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuInicioSesionActionPerformed
+        if(frmLog == null)
+        {
+           frmLog = new InicioSesion();
+           frmLog.setVisible(true);
+        }
+    }//GEN-LAST:event_submenuInicioSesionActionPerformed
+
+    private void menuusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuusuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuusuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,9 +308,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Usuario mod =null;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuPrincipal().setVisible(true);
+                new MenuPrincipal(mod).setVisible(true);
             }
         });
     }
@@ -217,6 +328,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuCaballero;
     private javax.swing.JMenu menuContacto;
     private javax.swing.JMenu menuDama;
+    private javax.swing.JMenu menuProovedores;
+    private javax.swing.JMenu menuRopaAd;
+    private javax.swing.JMenu menuusuario;
+    private javax.swing.JMenuItem submenu2;
+    private javax.swing.JMenuItem submenuAgregar;
+    private javax.swing.JMenuItem submenuInfoUsuario;
+    private javax.swing.JMenuItem submenuInicioSesion;
+    private javax.swing.JMenuItem submenuRegistrar;
     // End of variables declaration//GEN-END:variables
 
 }
