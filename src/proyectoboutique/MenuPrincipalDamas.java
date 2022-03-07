@@ -5,16 +5,20 @@
  */
 package proyectoboutique;
 
+import logica.Usuario;
+
 /**
  *
  * @author Intecom
  */
 public class MenuPrincipalDamas extends javax.swing.JFrame {
 
+    private Usuario user;
     /**
      * Creates new form MenuPrincipalDamas
      */
-    public MenuPrincipalDamas() {
+    public MenuPrincipalDamas(Usuario modusr) {
+        this.user=modusr;
         initComponents();
     }
 
@@ -126,19 +130,19 @@ public class MenuPrincipalDamas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void DamasInferiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DamasInferiorActionPerformed
-        DamasSuperior ds=new DamasSuperior();
+        DamasSuperior ds=new DamasSuperior(user);
         ds.setVisible(true);
         dispose();
     }//GEN-LAST:event_DamasInferiorActionPerformed
 
     private void DamasSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DamasSuperiorActionPerformed
-        DamasInferior di=new DamasInferior();
+        DamasInferior di=new DamasInferior(user);
         di.setVisible(true);
         dispose();
     }//GEN-LAST:event_DamasSuperiorActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        MenuPrincipal mp=new MenuPrincipal();
+        MenuPrincipal mp=new MenuPrincipal(user);
         mp.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -173,7 +177,7 @@ public class MenuPrincipalDamas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuPrincipalDamas().setVisible(true);
+                new MenuPrincipalDamas(null).setVisible(true);
             }
         });
     }

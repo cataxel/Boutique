@@ -5,6 +5,8 @@
  */
 package proyectoboutique;
 
+import logica.Usuario;
+
 /**
  *
  * @author Intecom
@@ -14,7 +16,9 @@ public class CaballerosSuperior extends javax.swing.JFrame {
     /**
      * Creates new form CaballerosSuperior
      */
-    public CaballerosSuperior() {
+    private Usuario user;
+    public CaballerosSuperior(Usuario user) {
+        this.user=user;
         initComponents();
     }
 
@@ -122,7 +126,7 @@ public class CaballerosSuperior extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros();
+        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros(user);
         mpc.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -162,7 +166,7 @@ public class CaballerosSuperior extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CaballerosSuperior().setVisible(true);
+                new CaballerosSuperior(null).setVisible(true);
             }
         });
     }

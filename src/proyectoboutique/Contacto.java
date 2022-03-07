@@ -5,6 +5,8 @@
  */
 package proyectoboutique;
 
+import logica.Usuario;
+
 /**
  *
  * @author Intecom
@@ -14,7 +16,9 @@ public class Contacto extends javax.swing.JFrame {
     /**
      * Creates new form Contacto
      */
-    public Contacto() {
+    Usuario user;
+    public Contacto(Usuario user) {
+        this.user=user;
         initComponents();
     }
 
@@ -122,7 +126,7 @@ public class Contacto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
-        MenuPrincipal obm = new MenuPrincipal();
+        MenuPrincipal obm = new MenuPrincipal(user);
         obm.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnregresarActionPerformed
@@ -157,7 +161,7 @@ public class Contacto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Contacto().setVisible(true);
+                new Contacto(null).setVisible(true);
             }
         });
     }

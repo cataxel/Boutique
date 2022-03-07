@@ -6,6 +6,8 @@
 
 package proyectoboutique;
 
+import logica.Usuario;
+
 /**
  *
  * @author Intecom
@@ -13,7 +15,8 @@ package proyectoboutique;
 public class DamasSuperior extends javax.swing.JFrame {
 
     /** Creates new form DamasSuperior */
-    public DamasSuperior() {
+    Usuario user;
+    public DamasSuperior(Usuario user) {
         initComponents();
     }
 
@@ -122,7 +125,7 @@ public class DamasSuperior extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegrearActionPerformed
-        MenuPrincipalDamas mpd=new MenuPrincipalDamas();
+        MenuPrincipalDamas mpd=new MenuPrincipalDamas(user);
         mpd.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegrearActionPerformed
@@ -162,7 +165,7 @@ public class DamasSuperior extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DamasSuperior().setVisible(true);
+                new DamasSuperior(null).setVisible(true);
             }
         });
     }

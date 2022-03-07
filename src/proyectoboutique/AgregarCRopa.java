@@ -4,6 +4,7 @@
  */
 package proyectoboutique;
 
+import java.sql.Connection;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
 import javax.swing.JOptionPane;
@@ -212,14 +213,17 @@ public class AgregarCRopa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Conexion conn = Conexion.getinstancia();
+        /*Conexion conn = Conexion.getinstancia();
         try
         {
-            conn.Conectar();
+            //con.Conectar();
         }
         catch(ClassNotFoundException e){
             JOptionPane.showMessageDialog(null,e);
-        }
+        }*/ 
+        //Es mejor generar una clase aparte para guardar en la base de datos para generar el registro
+        //para usar ese metodo aqui posteriotmente 
+        //usar SQL_Usuarios como referencia
     }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
