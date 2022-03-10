@@ -69,15 +69,13 @@
             <Property name="text" type="java.lang.String" value="Ropa"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="submenuAgregar">
+            <MenuItem class="javax.swing.JMenuItem" name="submenuRopaGestion">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Agregar Ropa"/>
+                <Property name="text" type="java.lang.String" value="Gestionar Ropa"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="submenu2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Algo"/>
-              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submenuRopaGestionActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

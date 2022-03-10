@@ -30,6 +30,7 @@ public class Conexion {
         }catch(ClassNotFoundException | SQLException ex)
         {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
         return this.con;
     }
@@ -42,6 +43,29 @@ public class Conexion {
         }catch(SQLException e)
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    
+    public static Connection getCon()
+    {
+        String DRIVER="com.mysql.cj.jdbc.Driver";
+        String DB="tiendaropa"; 
+        String URL="jdbc:mysql://localhost:3307/" + DB;
+        String USER="root";
+        String PASSWORD="";
+        /*String url = "jdbc:mysql://localhost:3307/"
+                + "database=tiendaropa;"
+                + "user=root;";
+        String password = "";*/
+        try
+        {
+            Class.forName(DRIVER);
+            Connection con = DriverManager.getConnection(URL,USER,PASSWORD);
+            return con;
+        }catch(ClassNotFoundException | SQLException e)
+        {
+            System.out.println(e.toString());
+            return null;
         }
     }
 }
