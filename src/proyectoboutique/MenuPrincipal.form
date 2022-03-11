@@ -14,7 +14,7 @@
             <Property name="text" type="java.lang.String" value="Dama"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDamaActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuDamaMouseClicked"/>
           </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuCaballero">
@@ -22,7 +22,7 @@
             <Property name="text" type="java.lang.String" value="Caballero"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuCaballeroActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuCaballeroMouseClicked"/>
           </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuContacto">

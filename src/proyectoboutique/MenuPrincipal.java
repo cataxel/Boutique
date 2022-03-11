@@ -150,17 +150,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanel1.setBounds(0, 0, 400, 280);
 
         menuDama.setText("Dama");
-        menuDama.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDamaActionPerformed(evt);
+        menuDama.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuDamaMouseClicked(evt);
             }
         });
         menuBar.add(menuDama);
 
         menuCaballero.setText("Caballero");
-        menuCaballero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCaballeroActionPerformed(evt);
+        menuCaballero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuCaballeroMouseClicked(evt);
             }
         });
         menuBar.add(menuCaballero);
@@ -242,18 +242,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCaballerosActionPerformed
 
-    private void menuDamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDamaActionPerformed
-        MenuPrincipalDamas mpd=new MenuPrincipalDamas(mod);
-        mpd.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_menuDamaActionPerformed
-
-    private void menuCaballeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCaballeroActionPerformed
-        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros(mod);
-        mpc.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_menuCaballeroActionPerformed
-
     private void menuContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuContactoMouseClicked
         Contacto contacto=new Contacto(mod);
         contacto.setVisible(true);
@@ -279,6 +267,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void menuusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuusuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuusuarioActionPerformed
+
+    private void menuDamaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuDamaMouseClicked
+        MenuPrincipalDamas mpd=new MenuPrincipalDamas(mod);
+        mpd.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuDamaMouseClicked
+
+    private void menuCaballeroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCaballeroMouseClicked
+        MenuPrincipalCaballeros mpc=new MenuPrincipalCaballeros(mod);
+        mpc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuCaballeroMouseClicked
 
     /**
      * @param args the command line arguments
