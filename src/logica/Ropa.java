@@ -9,14 +9,12 @@ public class Ropa
     private int idropa;
     private String nombre;
     private String descripcion;
-    private double precio;
-    private String talla;
+    private double precio_costo;
+    private double precio_venta;
+    private double ganancia;
     private String genero;
-    private int cantidad;
     private String marca;
-    private String clase;
-    private String tipo;
-    private boolean activo;
+    private int idtipoprenda;
 
     public int getIdropa() {
         return idropa;
@@ -42,36 +40,12 @@ public class Ropa
         this.descripcion = descripcion;
     }
 
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public String getTalla() {
-        return talla;
-    }
-
-    public void setTalla(String talla) {
-        this.talla = talla;
-    }
-
     public String getGenero() {
         return genero;
     }
 
     public void setGenero(String genero) {
         this.genero = genero;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
     }
 
     public String getMarca() {
@@ -82,28 +56,36 @@ public class Ropa
         this.marca = marca;
     }
 
-    public String getClase() {
-        return clase;
+    public int getIdtipoprenda() {
+        return idtipoprenda;
     }
 
-    public void setClase(String clase) {
-        this.clase = clase;
+    public void setIdtipoprenda(int idtipoprenda) {
+        this.idtipoprenda = idtipoprenda;
     }
 
-    public String getTipo() {
-        return tipo;
+    public double getPrecio_costo() {
+        return precio_costo;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setPrecio_costo(double precio_costo) {
+        this.precio_costo = precio_costo;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public double getPrecio_venta() {
+        return precio_venta;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setPrecio_venta(double precio_venta) {
+        this.precio_venta = precio_venta;
+    }
+
+    public double getGanancia() {
+        return ganancia;
+    }
+
+    public void setGanancia(double ganancia) {
+        this.ganancia = ganancia;
     }
     
     

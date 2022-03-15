@@ -22,22 +22,19 @@ public class SQL_Ropa extends Conexion
     {
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String consultaSQL = "INSERT INTO ropa(nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo, activo)";
-        consultaSQL += "VALUES(?,?,?,?,?,?,?,?,?,?) ;";
+        String consultaSQL = "INSERT INTO ropa(nombre, descripcion, precio_costo, precio_venta, ganancia, genero, marca, idtipoprenda)";
+        consultaSQL += "VALUES(?,?,?,?,?,?,?,?) ;";
         try
         {
           ps=con.prepareStatement(consultaSQL);
           ps.setString(1, ropa.getNombre());
           ps.setString(2, ropa.getDescripcion());
-          ps.setDouble(3, ropa.getPrecio());
-          ps.setString(4, ropa.getTalla());
-          ps.setString(5, ropa.getGenero());
-          ps.setInt(6, ropa.getCantidad());
+          ps.setDouble(3, ropa.getPrecio_costo());
+          ps.setDouble(4, ropa.getPrecio_venta());
+          ps.setDouble(5, ropa.getGanancia());
+          ps.setString(6, ropa.getGenero());
           ps.setString(7, ropa.getMarca());
-          ps.setString(8, ropa.getClase());
-          ps.setString(9, ropa.getTipo());
-          //ps.setBoolean(9, ropa.isActivo());
-          ps.setBoolean(10, true);
+          ps.setInt(8, ropa.getIdtipoprenda());
           ps.executeUpdate();
           return true;
         }catch(SQLException ex)
@@ -46,4 +43,31 @@ public class SQL_Ropa extends Conexion
             return false;
         }
     }
+    
+    public boolean Modificar(Ropa ropa)
+    {
+        PreparedStatement ps = null;
+        Connection con = getConexion();
+        String consultaSQL = "UPDATE ropa SET nombre = ?, descripcion = ?, precio_costo = ?, precio_venta = ?, ganancia = ?, genero = ?, marca = ?, idtipoprenda = ? WHERE idropa = ?";
+        try
+        {
+          ps=con.prepareStatement(consultaSQL);
+          ps.setString(1, ropa.getNombre());
+          ps.setString(2, ropa.getDescripcion());
+          ps.setDouble(3, ropa.getPrecio_costo());
+          ps.setDouble(4, ropa.getPrecio_venta());
+          ps.setDouble(5, ropa.getGanancia());
+          ps.setString(6, ropa.getGenero());
+          ps.setString(7, ropa.getMarca());
+          ps.setInt(8, ropa.getIdtipoprenda());
+          ps.setInt(9, ropa.getIdropa());
+          ps.executeUpdate();
+          return true;
+        }catch(SQLException ex)
+        {
+            Logger.getLogger(SQL_Usuarios.class.getName()).log(Level.SEVERE, null,ex);
+            return false;
+        }
+    }
+    
 }

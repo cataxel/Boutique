@@ -17,6 +17,13 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import proyectoboutique.db.Conexion;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JRadioButton;
+import logica.Ropa_Tallas;
+import logica.SQL_Ropa_Tallas;
+import logica.SQL_Usuarios;
 
 
 
@@ -29,18 +36,27 @@ public class CRUD_Ropa extends javax.swing.JFrame {
     public CRUD_Ropa(Usuario user) {
         this.user=user;
         initComponents();
-        cmbtipoS.setVisible(false);
-        cmbtipoI.setVisible(false);
-        //txtid.setVisible(false);
         btnGr = new ButtonGroup();
         btnGr1 = new ButtonGroup();
         btnGr.add(rbmasculino);
         btnGr.add(rbfemenino);
         btnGr1.add(rbsuperior);
         btnGr1.add(rbinferior);
+        btnGr1.add(rbcalzado);
         CargarTabla();
         txtid.setEditable(false);
+        //CargarComboTallas();
+        jLabel4.setVisible(false);
+        cmbtalla.setVisible(false);
+        jScrollPane3.setVisible(false);
+        txtexistencias.setVisible(false);
+        btbagregartalla.setVisible(false);
+        btnvolver.setVisible(false);
+        jLabel11.setVisible(false);
+        btnlimpiartallas.setVisible(false);
+
     }
+     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,14 +72,12 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtdescripcion = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        txtprecio = new javax.swing.JTextField();
+        txtpreciocosto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cmbtalla = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         rbmasculino = new javax.swing.JRadioButton();
         rbfemenino = new javax.swing.JRadioButton();
-        jLabel6 = new javax.swing.JLabel();
-        txtcantidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtmarca = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -71,15 +85,23 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         rbinferior = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         cmbtipo1 = new javax.swing.JComboBox<>();
-        cmbtipoS = new javax.swing.JComboBox<>();
-        cmbtipoI = new javax.swing.JComboBox<>();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtid = new javax.swing.JTextField();
+        rbcalzado = new javax.swing.JRadioButton();
+        btnseleccionartalla = new javax.swing.JButton();
+        txtexistencias = new javax.swing.JTextField();
+        btbagregartalla = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtprecioventa = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnvolver = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        btnlimpiartallas = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         txtbuscar = new javax.swing.JTextField();
         btnbuscar = new javax.swing.JButton();
@@ -101,11 +123,11 @@ public class CRUD_Ropa extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Descripcion", "Precio", "Talla", "Genero", "Cantidad", "Marca", "Clase", "Tipo"
+                "Id", "Nombre", "Descripcion", "P.Costo", "P.Venta", "Ganancia", "Genero", "Marca", "Clase", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false
@@ -128,16 +150,20 @@ public class CRUD_Ropa extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 3, 14))); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Nombre:");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 25, 55, -1));
 
         txtnombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtnombreActionPerformed(evt);
             }
         });
+        jPanel2.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 22, 177, -1));
 
         jLabel2.setText("Descripcion:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 51, 70, -1));
 
         jScrollPane2.setToolTipText("");
 
@@ -145,39 +171,59 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         txtdescripcion.setRows(5);
         jScrollPane2.setViewportView(txtdescripcion);
 
-        jLabel3.setText("Precio:");
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 74, 353, 60));
+
+        jLabel3.setText("Precio Costo:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 74, -1));
+        jPanel2.add(txtpreciocosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 80, -1));
 
         jLabel4.setText("Talla:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 37, -1));
 
-        cmbtalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "CH", "M", "G", "XG" }));
+        cmbtalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una clase" }));
+        jPanel2.add(cmbtalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
 
         jLabel5.setText("Genero:");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 57, -1));
 
         rbmasculino.setBackground(new java.awt.Color(255, 255, 255));
         rbmasculino.setText("Masculino");
+        jPanel2.add(rbmasculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, -1, -1));
 
         rbfemenino.setBackground(new java.awt.Color(255, 255, 255));
         rbfemenino.setText("Femenino");
-
-        jLabel6.setText("Cantidad:");
+        jPanel2.add(rbfemenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, -1, -1));
 
         jLabel7.setText("Marca:");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 37, -1));
+        jPanel2.add(txtmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 85, -1));
 
         jLabel8.setText("Clase de prenda:");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 97, 30));
 
         rbsuperior.setBackground(new java.awt.Color(255, 255, 255));
         rbsuperior.setText("Superior");
+        rbsuperior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbsuperiorMouseClicked(evt);
+            }
+        });
+        jPanel2.add(rbsuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, -1));
 
         rbinferior.setBackground(new java.awt.Color(255, 255, 255));
         rbinferior.setText("Inferior");
+        rbinferior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbinferiorMouseClicked(evt);
+            }
+        });
+        jPanel2.add(rbinferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, -1));
 
         jLabel9.setText("Tipo de prenda:");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 274, 85, -1));
 
         cmbtipo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una clase de prenda primero" }));
-
-        cmbtipoS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Camiseta", "Camisa", "Sudadera", "Chaqueta", "Sueter", "Abrigo" }));
-
-        cmbtipoI.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Pantalon de vestir", "Pantalon deportivo", "Shorts", "Bermudas", " " }));
+        jPanel2.add(cmbtipo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 271, 240, -1));
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +231,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        jPanel2.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 320, 83, -1));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +239,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 btnModificarActionPerformed(evt);
             }
         });
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 320, -1, -1));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -199,6 +247,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
+        jPanel2.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -206,15 +255,10 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 btnLimpiarActionPerformed(evt);
             }
         });
-
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
+        jPanel2.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(282, 320, 77, -1));
 
         jLabel10.setText("Id:");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 25, 17, -1));
 
         txtid.setActionCommand("<Not Set>");
         txtid.setAutoscrolls(false);
@@ -224,156 +268,88 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 txtidActionPerformed(evt);
             }
         });
+        jPanel2.add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(283, 22, 76, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtid))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)
-                                .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)
-                                .addComponent(cmbtalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(5, 5, 5)
-                                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(5, 5, 5)
-                                    .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(8, 8, 8)
-                                    .addComponent(rbmasculino)
-                                    .addGap(75, 75, 75)
-                                    .addComponent(rbfemenino))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(12, 12, 12))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 9, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)
-                                .addComponent(rbsuperior)
-                                .addGap(18, 18, 18)
-                                .addComponent(rbinferior)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnActualizar))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnModificar)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGap(91, 91, 91)
-                                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGap(9, 9, 9)
-                                            .addComponent(btnEliminar))))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGap(3, 3, 3)
-                                            .addComponent(cmbtipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(cmbtipoI, javax.swing.GroupLayout.Alignment.LEADING, 0, 165, Short.MAX_VALUE)
-                                            .addComponent(cmbtipoS, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
-                    .addComponent(jScrollPane2))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10)
-                        .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(7, 7, 7)
-                .addComponent(jLabel2)
-                .addGap(7, 7, 7)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbtalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel5))
-                    .addComponent(rbmasculino)
-                    .addComponent(rbfemenino))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(rbsuperior)
-                    .addComponent(rbinferior)
-                    .addComponent(btnActualizar))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbtipoS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(cmbtipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cmbtipoI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel9)))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregar)
-                    .addComponent(btnLimpiar)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEliminar)
-                        .addComponent(btnModificar)))
-                .addContainerGap())
-        );
+        rbcalzado.setBackground(new java.awt.Color(255, 255, 255));
+        rbcalzado.setText("Calzado");
+        rbcalzado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbcalzadoMouseClicked(evt);
+            }
+        });
+        rbcalzado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbcalzadoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(rbcalzado, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
+
+        btnseleccionartalla.setText("Seleccionar Tallas");
+        btnseleccionartalla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnseleccionartallaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnseleccionartalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 190, -1));
+        jPanel2.add(txtexistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 70, -1));
+
+        btbagregartalla.setText("Agregar talla");
+        btbagregartalla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btbagregartallaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btbagregartalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 100, -1));
+
+        jLabel6.setText("Precio Venta: ");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+        jPanel2.add(txtprecioventa, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 80, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Talla", "Existencias"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTable1);
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 350, 120));
+
+        btnvolver.setText("Volver");
+        btnvolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvolverActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnvolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, -1, -1));
+
+        jLabel11.setText("Existencias");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        btnlimpiartallas.setText("Limpiar");
+        btnlimpiartallas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlimpiartallasActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnlimpiartallas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 3, 14))); // NOI18N
@@ -387,6 +363,9 @@ public class CRUD_Ropa extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtbuscarKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyReleased(evt);
+            }
         });
 
         btnbuscar.setText("Buscar");
@@ -396,7 +375,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
             }
         });
 
-        cmbfiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Nombre", "Talla", "Genero", "Marca", "Clase", "Tipo" }));
+        cmbfiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Nombre", "Genero", "Marca", "Clase", "Tipo" }));
 
         btnRestablecer.setText("Restablecer tabla");
         btnRestablecer.addActionListener(new java.awt.event.ActionListener() {
@@ -453,9 +432,9 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)))
                     .addComponent(txtVolver))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,7 +445,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -476,11 +455,13 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -491,123 +472,209 @@ public class CRUD_Ropa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnombreActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int id = 0;
+        boolean ban = false;
         try
         {
-            int id = Integer.parseInt(txtid.getText());
+            id = Integer.parseInt(txtid.getText());
+            ban = true;
         }catch(NumberFormatException e)
         {
             JOptionPane.showMessageDialog(null, "Seleccione un elemento de la tabla para obtener un id");
         }
-        if(!txtid.getText().equals(""))
+        SQL_Ropa modSql = new SQL_Ropa();
+        Ropa mod = new Ropa();
+        String nombre = txtnombre.getText();
+        if(ban)
         {
-            try
+            if(nombre.equals(""))
             {
-                Connection con = Conexion.getCon();
-                PreparedStatement ps = con.prepareStatement("UPDATE ropa SET nombre=?, descripcion=?, precio=?, talla=?, genero=?, cantidad=?, marca=?, clase=?, tipo=? WHERE idropa=?");
-                String nombre = txtnombre.getText();
-                ps.setString(1, nombre);
+                JOptionPane.showMessageDialog(null, "Debes de ingresar un nombre a la prenda");
+            }
+            else
+            {
+                mod.setNombre(nombre);
                 String descripcion = txtdescripcion.getText();
-                ps.setString(2, descripcion);
-                try
+                if(descripcion.equals(""))
                 {
-                    double precio = Double.parseDouble(txtprecio.getText());
-                    ps.setDouble(3, precio);
-                }catch(NumberFormatException e)
-                {
-                    JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en el precio");
-                }
-                if(!cmbtalla.getSelectedItem().toString().equals("Seleccione"))
-                {
-                    String talla = cmbtalla.getSelectedItem().toString();
-                    ps.setString(4, talla);
+                    JOptionPane.showMessageDialog(null, "Debes de ingresar una descripcion a la prenda");
                 }else
                 {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar una talla");
-                }
-                String sexo;
-                if(rbmasculino.isSelected()==true && rbfemenino.isSelected()==false)
-                {
-                    sexo = "Masculino";
-                    ps.setString(5, sexo);
-                }else 
-                {
-                    if(rbfemenino.isSelected()==true && rbmasculino.isSelected()==false)
+                    mod.setDescripcion(descripcion);
+                    if(txtpreciocosto.getText().equals("") && txtprecioventa.getText().equals(""))
                     {
-                        sexo = "Femenino";
-                        ps.setString(5, sexo);
+                        JOptionPane.showMessageDialog(null, "Debe ingresar valores en los precios");
                     }else
                     {
-                        JOptionPane.showMessageDialog(null, "Debe seleccionar un genero");
+                        boolean bandera = false;
+                        try
+                        {
+                            double precio_costo = Double.parseDouble(txtpreciocosto.getText());
+                            double precio_venta = Double.parseDouble(txtprecioventa.getText());
+                            if(precio_costo > 0 && precio_venta > 0)
+                            {
+                                if(precio_venta > precio_costo)
+                                {
+                                    mod.setPrecio_costo(precio_costo);
+                                    mod.setPrecio_venta(precio_venta);
+                                    mod.setGanancia(precio_venta - precio_costo);
+                                    bandera = true;
+                                }
+                                else
+                                {
+                                    JOptionPane.showMessageDialog(null, "El precio de costo no debe ser mayor al de venta");
+                                }
+                            }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(null, "Los precios deben ser mayores a cero");
+                            }
+                        }catch(NumberFormatException e)
+                        {
+                            JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en el precio");
+                        }
+                        if(bandera)
+                        {
+                            if(cmbtalla.getSelectedItem().toString().equals("Seleccione una clase"))
+                            {
+                                JOptionPane.showMessageDialog(null, "Debe seleccionar una talla");
+                            }
+                            else
+                            {
+                                String sexo;
+                                if(rbmasculino.isSelected()==true)
+                                {
+                                    sexo = "Masculino";
+                                    mod.setGenero(sexo);
+                                }else 
+                                {
+                                    if(rbfemenino.isSelected()==true)
+                                    {
+                                        sexo = "Femenino";
+                                        mod.setGenero(sexo);
+                                    }else
+                                    {
+                                        JOptionPane.showMessageDialog(null, "Debe seleccionar un genero");
+                                    }
+                                }
+                                try
+                                {
+                                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                                    if(model.getRowCount()>0){
+                                        /*
+                                         for (int i = 0; i<model.getRowCount(); i++) {
+                                            final String col1 = (String) model.getValueAt(i, 0);
+                                            final String col2 = (String) model.getValueAt(i, 1);
+                                            System.out.println("Talla: " + col1 + " Existencia: " + col2);
+                                        }
+                                        */
+                                    }
+                                    else   
+                                    {
+                                       JOptionPane.showMessageDialog(null, "Debe Agregar las tallas");
+                                    }
+                                }catch(NumberFormatException e)
+                                {
+                                    JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en las existencias");
+                                }
+                                String marca = txtmarca.getText();
+                                if(marca.equals(""))
+                                {
+                                    JOptionPane.showMessageDialog(null, "Debes de ingresar una marca");
+                                }else
+                                {
+                                    mod.setMarca(marca);
+                                    int clase=-1;
+                                    if(rbsuperior.isSelected()==true)
+                                    {
+                                        clase = 1;
+                                    }else 
+                                    {
+                                        if(rbinferior.isSelected()==true)
+                                        {
+                                            clase = 2;
+                                        }else
+                                        {
+                                            if(rbcalzado.isSelected()==true)
+                                            {
+                                                clase = 3;
+                                            }
+                                        }
+                                    }
+                                    if(!cmbtipo1.getSelectedItem().toString().equals("Seleccione una clase de prenda primero"))
+                                    {
+                                         mod.setIdtipoprenda(traerIDTipoPrenda(cmbtipo1.getSelectedItem().toString(),clase));
+                                    }
+                                    else
+                                    {
+                                        JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de ropa");
+                                    }
+                                    mod.setIdropa(id);
+                                if(modSql.Modificar(mod))
+                                    {
+                                          //consulta para traer el ultimo id deROPA REGISTRADO
+                                          //SELECT MAX(idropa) AS 'idropa' FROM ropa
+                                         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                                            if(model.getRowCount()>0){
+                                                Ropa_Tallas rt =new Ropa_Tallas();
+                                                SQL_Ropa_Tallas sqlropatallas=new SQL_Ropa_Tallas();
+                                                sqlropatallas.Eliminar(id);
+                                                for (int i = 0; i<model.getRowCount(); i++) {
+
+                                                     rt.setIdropa(id);
+                                                     rt.setIdtalla(traerIDTalla(model.getValueAt(i, 0).toString(), clase));
+                                                     rt.setExistencias(Integer.parseInt(model.getValueAt(i, 1).toString()));
+                                                     sqlropatallas.Agregar(rt);
+                                                }
+                                            }
+                                        //una vez que guardo la ropa guardara las tallas
+
+                                        JOptionPane.showMessageDialog(this, "Registro guardado", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                                        Limpiar();
+                                        CargarTabla();
+                                    }else
+                                    {
+                                        JOptionPane.showMessageDialog(this, "Error al guardar el registro", "Registro", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                try
-                {
-                    int cantidad = Integer.parseInt(txtcantidad.getText());
-                    ps.setInt(6, cantidad);
-                }catch(NumberFormatException e)
-                {
-                    JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en la cantidad");
-                }
-                String marca = txtmarca.getText();
-                ps.setString(7, marca);
-                String clase;
-                String tipo;
-                if(rbsuperior.isSelected()==true && rbinferior.isSelected()==false)
-                {
-                    clase = "Superior";
-                    ps.setString(8, clase);
-                    if(!cmbtipoS.getSelectedItem().toString().equals("Seleccione"))
-                    {
-                        tipo = cmbtipoS.getSelectedItem().toString();
-                        ps.setString(9, tipo);
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de ropa");
-                    }
-                }else 
-                {
-                    if(rbinferior.isSelected()==true && rbsuperior.isSelected()==false)
-                    {
-                        clase = "Inferior";
-                        ps.setString(8, clase);
-                        if(!cmbtipoI.getSelectedItem().toString().equals("Seleccione"))
-                        {
-                           tipo = cmbtipoI.getSelectedItem().toString();
-                           ps.setString(9, tipo);
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de ropa");
-                        }
-                    }else
-                    {
-                        JOptionPane.showMessageDialog(null, "Debe seleccionar una clase y posteriormente un tipo");
-                    }
-            }
-                ps.setInt(10, Integer.parseInt(txtid.getText()));    
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(this, "Registro modificado", "Registro", JOptionPane.INFORMATION_MESSAGE);
-                Limpiar();
-                CargarTabla();
-            }
-            catch(SQLException e)
-            {
-                JOptionPane.showMessageDialog(this, "Error al modificar el registro", "Registro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int id = 0;
         try
         {
-            int id = Integer.parseInt(txtid.getText());
+            id = Integer.parseInt(txtid.getText());
         }catch(NumberFormatException e)
         {
             JOptionPane.showMessageDialog(null, "Seleccione un elemento de la tabla para obtener un id");
         }
         if(!txtid.getText().equals(""))
         {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                if(model.getRowCount()>0){/*
+                        for (int i = 0; i<model.getRowCount(); i++) {
+                        final String col1 = (String) model.getValueAt(i, 0);
+                        final String col2 = (String) model.getValueAt(i, 1);
+                        System.out.println("Talla: " + col1 + " Existencia: " + col2);
+                    }*/
+             //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+             if(model.getRowCount()>0){
+                SQL_Ropa_Tallas sqlropatallas = new SQL_Ropa_Tallas();
+                for (int i = 0; i<model.getRowCount(); i++) 
+                {
+                    Ropa_Tallas rt =new Ropa_Tallas();
+                    rt.setIdropa(id);
+                    rt.setIdtalla(traerIDTalla((String) model.getValueAt(i, 0), 0));
+                    rt.setExistencias(Integer.parseInt(model.getValueAt(i, 1).toString()));
+                    sqlropatallas.Eliminar(id);
+                }
+             }
             try
             {
                 Connection con = Conexion.getCon();
@@ -622,6 +689,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
             {
                 JOptionPane.showMessageDialog(this, "Error al eliminar el registro", "Registro", JOptionPane.ERROR_MESSAGE);
             }
+            }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -629,179 +697,234 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         SQL_Ropa modSql = new SQL_Ropa();
         Ropa mod = new Ropa();
         String nombre = txtnombre.getText();
-        mod.setNombre(nombre);
-        String descripcion = txtdescripcion.getText();
-        mod.setDescripcion(descripcion);
-        try
+        if(nombre.equals(""))
         {
-            double precio = Double.parseDouble(txtprecio.getText());
-            mod.setPrecio(precio);
-        }catch(NumberFormatException e)
-        {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en el precio");
+            JOptionPane.showMessageDialog(null, "Debes de ingresar un nombre a la prenda");
         }
-        if(!cmbtalla.getSelectedItem().toString().equals("Seleccione"))
+        else
         {
-            String talla = cmbtalla.getSelectedItem().toString();
-            mod.setTalla(talla);
-        }else
-        {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una talla");
-        }
-        String sexo;
-        if(rbmasculino.isSelected()==true && rbfemenino.isSelected()==false)
-        {
-            sexo = "Masculino";
-            mod.setGenero(sexo);
-        }else 
-        {
-            if(rbfemenino.isSelected()==true && rbmasculino.isSelected()==false)
+            mod.setNombre(nombre);
+            String descripcion = txtdescripcion.getText();
+            if(descripcion.equals(""))
             {
-                sexo = "Femenino";
-                mod.setGenero(sexo);
-                cmbtipoI.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Debes de ingresar una descripcion a la prenda");
             }else
             {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un genero");
-            }
-        }
-        try
-        {
-            int cantidad = Integer.parseInt(txtcantidad.getText());
-            mod.setCantidad(cantidad);
-        }catch(NumberFormatException e)
-        {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en la cantidad");
-        }
-        String marca = txtmarca.getText();
-        mod.setMarca(marca);
-        String clase;
-        String tipo;
-        if(rbsuperior.isSelected()==true && rbinferior.isSelected()==false)
-        {
-            clase = "Superior";
-            mod.setClase(clase);
-            if(!cmbtipoS.getSelectedItem().toString().equals("Seleccione"))
-            {
-                tipo = cmbtipoS.getSelectedItem().toString();
-                mod.setTipo(tipo);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de ropa");
-            }
-        }else 
-        {
-            if(rbinferior.isSelected()==true && rbsuperior.isSelected()==false)
-            {
-                clase = "Inferior";
-                mod.setClase(clase);
-                if(!cmbtipoI.getSelectedItem().toString().equals("Seleccione"))
+                mod.setDescripcion(descripcion);
+                if(txtpreciocosto.getText().equals("") && txtprecioventa.getText().equals(""))
                 {
-                   tipo = cmbtipoI.getSelectedItem().toString();
-                   mod.setTipo(tipo);
-                }
-                else
+                    JOptionPane.showMessageDialog(null, "Debe ingresar valores en los precios");
+                }else
                 {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de ropa");
-                }
-            }else
-            {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar una clase y posteriormente un tipo");
-            }
-        }
-        if(modSql.Agregar(mod))
-            {
-                JOptionPane.showMessageDialog(this, "Registro guardado", "Registro", JOptionPane.INFORMATION_MESSAGE);
-                Limpiar();
-                CargarTabla();
-            }else
-            {
-                JOptionPane.showMessageDialog(this, "Error al guardar el registro", "Registro", JOptionPane.ERROR_MESSAGE);
-            }
-    }//GEN-LAST:event_btnAgregarActionPerformed
+                    boolean bandera = false;
+                    try
+                    {
+                        double precio_costo = Double.parseDouble(txtpreciocosto.getText());
+                        double precio_venta = Double.parseDouble(txtprecioventa.getText());
+                        if(precio_costo > 0 && precio_venta > 0)
+                        {
+                            if(precio_venta > precio_costo)
+                            {
+                                mod.setPrecio_costo(precio_costo);
+                                mod.setPrecio_venta(precio_venta);
+                                mod.setGanancia(precio_venta - precio_costo);
+                                bandera = true;
+                            }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(null, "El precio de costo no debe ser mayor al de venta");
+                            }
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null, "Los precios deben ser mayores a cero");
+                        }
+                    }catch(NumberFormatException e)
+                    {
+                        JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en el precio");
+                    }
+                    if(bandera)
+                    {
+                        if(cmbtalla.getSelectedItem().toString().equals("Seleccione una clase"))
+                        {
+                            JOptionPane.showMessageDialog(null, "Debe seleccionar una talla");
+                        }
+                        else
+                        {
+                            String sexo;
+                            if(rbmasculino.isSelected()==true)
+                            {
+                                sexo = "Masculino";
+                                mod.setGenero(sexo);
+                            }else 
+                            {
+                                if(rbfemenino.isSelected()==true)
+                                {
+                                    sexo = "Femenino";
+                                    mod.setGenero(sexo);
+                                }else
+                                {
+                                    JOptionPane.showMessageDialog(null, "Debe seleccionar un genero");
+                                }
+                            }
+                            try
+                            {
+                                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                                if(model.getRowCount()>0){
+                                    /*
+                                     for (int i = 0; i<model.getRowCount(); i++) {
+                                        final String col1 = (String) model.getValueAt(i, 0);
+                                        final String col2 = (String) model.getValueAt(i, 1);
+                                        System.out.println("Talla: " + col1 + " Existencia: " + col2);
+                                    }
+                                    */
+                                }
+                                else   
+                                {
+                                   JOptionPane.showMessageDialog(null, "Debe Agregar las tallas");
+                                }
+                            }catch(NumberFormatException e)
+                            {
+                                JOptionPane.showMessageDialog(null, "Debe ingresar un valor numerico en las existencias");
+                            }
+                            String marca = txtmarca.getText();
+                            if(marca.equals(""))
+                            {
+                                JOptionPane.showMessageDialog(null, "Debes de ingresar una marca");
+                            }else
+                            {
+                                mod.setMarca(marca);
+                                int clase=-1;
+                                if(rbsuperior.isSelected()==true)
+                                {
+                                    clase = 1;
+                                }else 
+                                {
+                                    if(rbinferior.isSelected()==true)
+                                    {
+                                        clase = 2;
+                                    }else
+                                    {
+                                        if(rbcalzado.isSelected()==true)
+                                        {
+                                            clase = 3;
+                                        }
+                                    }
+                                }
+                                if(!cmbtipo1.getSelectedItem().toString().equals("Seleccione una clase de prenda primero"))
+                                {
+                                     mod.setIdtipoprenda(traerIDTipoPrenda(cmbtipo1.getSelectedItem().toString(),clase));
+                                }
+                                else
+                                {
+                                    JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de ropa");
+                                }
+                            if(modSql.Agregar(mod))
+                                {
+                                      //consulta para traer el ultimo id deROPA REGISTRADO
+                                      //SELECT MAX(idropa) AS 'idropa' FROM ropa
+                                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                                        if(model.getRowCount()>0){
+                                            SQL_Ropa_Tallas sqlropatallas=new SQL_Ropa_Tallas();
+                                            for (int i = 0; i<model.getRowCount(); i++) {
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        if(rbsuperior.isSelected()==true && rbinferior.isSelected()==false)
-        {
-            cmbtipoS.setVisible(true);
-            cmbtipoI.setVisible(false);
-            cmbtipo1.setVisible(false);
-            cmbtipoI.setSelectedItem("Seleccione");
-            cmbtipoS.setSelectedItem("Seleccione");
-        }else 
-        {
-            if(rbinferior.isSelected()==true && rbsuperior.isSelected()==false)
-            {
-                cmbtipoI.setVisible(true);
-                cmbtipoS.setVisible(false);
-                cmbtipo1.setVisible(false);
-                cmbtipoS.setSelectedItem("Seleccione");
-                cmbtipoI.setSelectedItem("Seleccione");
-            }else
-            {
-                if(rbinferior.isSelected()==false && rbsuperior.isSelected()==false)
-                {
-                    cmbtipoI.setVisible(false);
-                    cmbtipoS.setVisible(false);
-                    cmbtipo1.setVisible(true);
-                    cmbtipoI.setSelectedItem("Seleccione");
-                    cmbtipoS.setSelectedItem("Seleccione");
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar una clase y posteriormente un tipo");
+                                                 Ropa_Tallas rt =new Ropa_Tallas();
+                                                 rt.setIdropa(traerUltimoIDRopa());
+                                                 rt.setIdtalla(traerIDTalla(model.getValueAt(i, 0).toString(), clase));
+                                                 rt.setExistencias(Integer.parseInt(model.getValueAt(i, 1).toString()));
+                                                 sqlropatallas.Agregar(rt);
+                                            }
+                                        }
+                                    //una vez que guardo la ropa guardara las tallas
+
+                                    JOptionPane.showMessageDialog(this, "Registro guardado", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                                    Limpiar();
+                                    CargarTabla();
+                                }else
+                                {
+                                    JOptionPane.showMessageDialog(this, "Error al guardar el registro", "Registro", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                        }
+              }
                 }
             }
         }
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidActionPerformed
 
     private void tablaropaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaropaMouseClicked
+        //Este metodo es para que se le pueda hacer clic a la tabla
         try
         {
             int fila = tablaropa.getSelectedRow();
             int id = Integer.parseInt(tablaropa.getValueAt(fila, 0).toString());
-            PreparedStatement ps;
-            ResultSet rs;
+            PreparedStatement ps, ps2;
+            ResultSet rs, rs2;
+            ResultSetMetaData rsm;
             Connection con = Conexion.getCon();
-            String consultaSQL = "SELECT nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE idropa=?";
+            Connection con2 = Conexion.getCon();
+            String consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.idropa=? ";
+            String consulta_talla = "SELECT t.nombre, rt.existencias FROM Tallas t INNER JOIN ropa_talla rt ON t.idtalla = rt.idtalla INNER JOIN ropa r ON rt.idropa = r.idropa WHERE r.idropa=?";
             ps=con.prepareStatement(consultaSQL);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while(rs.next())
             {
                 txtid.setText(String.valueOf(id));
-                txtnombre.setText(rs.getString("nombre"));
-                txtdescripcion.setText(rs.getString("descripcion"));
-                txtprecio.setText(rs.getString("precio"));
-                cmbtalla.setSelectedItem(rs.getString("talla"));
-                if(rs.getString("genero").equals("Masculino"))
+                txtnombre.setText(rs.getString(2));
+                txtdescripcion.setText(rs.getString(3));
+                txtpreciocosto.setText(rs.getString(4));
+                txtprecioventa.setText(rs.getString(5));
+                //cmbtalla.setSelectedItem(rs.getString("talla"));
+                if(rs.getString(6).equals("Masculino"))
                 {
                     rbmasculino.setSelected(true);
-                }else if(rs.getString("genero").equals("Femenino"))
+                }else if(rs.getString(6).equals("Femenino"))
                 {
                     rbfemenino.setSelected(true);
                 }
-                txtcantidad.setText(rs.getString("cantidad"));
-                txtmarca.setText(rs.getString("marca"));
-                if(rs.getString("clase").equals("Superior"))
+                //txtcantidad.setText(rs.getString("cantidad"));
+                txtmarca.setText(rs.getString(7));
+                if(rs.getString(8).equals("Superior"))
                 {
                     rbsuperior.setSelected(true);
-                    cmbtipoI.setVisible(false);
-                    cmbtipoS.setVisible(true);
-                    cmbtipo1.setVisible(false);
-                    cmbtipoS.setSelectedItem(rs.getString("tipo"));
-                }else if(rs.getString("clase").equals("Inferior"))
+                    TraerTipos(1);
+                    TraerTallas(1);
+                }else
                 {
-                    rbinferior.setSelected(true);
-                    cmbtipoI.setVisible(true);
-                    cmbtipoS.setVisible(false);
-                    cmbtipo1.setVisible(false);
-                    cmbtipoI.setSelectedItem(rs.getString("tipo"));
+                    if(rs.getString(8).equals("Inferior"))
+                    {
+                        rbinferior.setSelected(true);
+                        TraerTipos(2);
+                        TraerTallas(2);
+                    }else if(rs.getString(8).equals("Calzado"))
+                    {
+                        rbcalzado.setSelected(true);
+                        TraerTipos(3);
+                        TraerTallas(3);
+                    }
+                }
+                cmbtipo1.setSelectedItem(rs.getString(9));
+                
+                DefaultTableModel modelotabla = (DefaultTableModel) jTable1.getModel();
+                modelotabla.setRowCount(0);
+                ps2 = con2.prepareStatement(consulta_talla);
+                ps2.setInt(1, id);
+                rs2 = ps2.executeQuery();
+                rsm = rs2.getMetaData();
+                int columnas = rsm.getColumnCount();;
+                while(rs2.next())
+                {
+                    Object[] fila2 = new Object[columnas];
+                    for(int indice=0; indice<columnas; indice++)
+                    {
+                        fila2[indice] = rs2.getObject(indice+1);
+                    }
+                    modelotabla.addRow(fila2);
                 }
             }
         }
@@ -828,7 +951,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         String busqueda = txtbuscar.getText();
         if(busqueda.trim().equals(""))
         {
-            CargarTabla();
+            //CargarTabla();
             JOptionPane.showMessageDialog(null, "Debes ingresar un valor al campo de busqueda dependiendo del filtro seleccionado");
         }
         int columnas;
@@ -928,22 +1051,269 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         CargarTabla();
     }//GEN-LAST:event_btnRestablecerActionPerformed
 
+    private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyReleased
+        DefaultTableModel modelotabla = (DefaultTableModel) tablaropa.getModel();
+        modelotabla.setRowCount(0);
+        PreparedStatement ps;
+        ResultSet rs;
+        ResultSetMetaData rsmd;
+        String busqueda = txtbuscar.getText();
+        if(busqueda.trim().equals(""))
+        {
+            CargarTabla();
+        }
+        else
+        {
+        int columnas;
+        int[] anchos = {50,100,150,60,60,80,90,124};
+        for(int i = 0; i<tablaropa.getColumnCount(); i++)
+        {
+            tablaropa.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+        }
+            try
+            {
+                Connection con = Conexion.getCon();
+                String consultaSQL = "";
+                String filtro = cmbfiltro.getSelectedItem().toString();
+                if(filtro.equals("Id"))
+                {
+                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.idropa = '"+busqueda+"' ";
+                }else
+                {
+                    if(filtro.equals("Nombre"))
+                    {
+                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.nombre like '%"+busqueda+"%' ";
+                    }else
+                    {
+                            if(filtro.equals("Genero"))
+                            {
+                                consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.genero like '%"+busqueda+"%' ";
+                            }
+                            else
+                            {
+                                if(filtro.equals("Marca"))
+                                {
+                                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.marca like '%"+busqueda+"%' ";
+                                }
+                                else
+                                {
+                                    if(filtro.equals("Clase"))
+                                    {
+                                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE cp.nombre like '%"+busqueda+"%' ";
+                                    }
+                                    else
+                                    {
+                                        if(filtro.equals("Tipo"))
+                                        {
+                                            consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE tp.nombre like '%"+busqueda+"%' ";
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                }
+                ps = con.prepareStatement(consultaSQL);
+                rs = ps.executeQuery();
+                rsmd = rs.getMetaData();
+                columnas = rsmd.getColumnCount();
+                while(rs.next())
+                {
+                    Object[] fila = new Object[columnas];
+                    for(int indice=0; indice<columnas; indice++)
+                    {
+                        fila[indice] = rs.getObject(indice+1);
+                    }
+                    modelotabla.addRow(fila);
+                }
+            }
+            catch(SQLException e)
+            {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+    }//GEN-LAST:event_txtbuscarKeyReleased
+
+    int claseSeleccionada =1;
+    private void rbsuperiorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbsuperiorMouseClicked
+        TraerTallas(1);
+        TraerTipos(1);
+        claseSeleccionada=1;
+        LimpiarTablaTallas();
+    }//GEN-LAST:event_rbsuperiorMouseClicked
+
+    private void rbinferiorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbinferiorMouseClicked
+        TraerTallas(2);
+        TraerTipos(2);
+        claseSeleccionada=2;
+        LimpiarTablaTallas();
+    }//GEN-LAST:event_rbinferiorMouseClicked
+
+    private void TraerTallas(int idClase){
+        try
+        {
+            Connection con = Conexion.getCon();
+            String consultaSQL = "select idtalla,nombre from Tallas where idclasePrenda=?";
+            PreparedStatement ps;
+            ResultSet rs;
+            ps = con.prepareStatement(consultaSQL);
+            ps.setInt(1, idClase);
+            rs = ps.executeQuery();
+            cmbtalla.removeAllItems();
+            while(rs.next())
+            {
+               cmbtalla.addItem(rs.getString(2));
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }
+    
+    private void TraerTipos(int idClase)
+    {
+        try
+        {
+            Connection con = Conexion.getCon();
+            String consultaSQL = "select idTipoPrenda,nombre from TipoPrenda where idclasePrenda=?";
+            PreparedStatement ps;
+            ResultSet rs;
+            ps = con.prepareStatement(consultaSQL);
+            ps.setInt(1, idClase);
+            rs = ps.executeQuery();
+            cmbtipo1.removeAllItems();
+            while(rs.next())
+            {
+               cmbtipo1.addItem(rs.getString(2));
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }
+    
+    private void rbcalzadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbcalzadoMouseClicked
+        TraerTallas(3);
+        TraerTipos(3);
+        claseSeleccionada=3;
+        LimpiarTablaTallas();
+    }//GEN-LAST:event_rbcalzadoMouseClicked
+
+    private void rbcalzadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbcalzadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbcalzadoActionPerformed
+
+    private void btnseleccionartallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnseleccionartallaActionPerformed
+        System.out.println(claseSeleccionada);
+        MostrarOcultarComponentes(false);            
+    }//GEN-LAST:event_btnseleccionartallaActionPerformed
+
+    private void btbagregartallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbagregartallaActionPerformed
+        if(!(cmbtalla.getSelectedItem().toString().equals("Seleccione una clase")))
+        {
+            int existencias = Integer.parseInt(txtexistencias.getText());
+            if(existencias > 0)
+            {
+                try
+                {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    int columnas = model.getRowCount();
+                    boolean existe =false;
+                    for (int i = 0; i<columnas; i++) {
+                        if(model.getValueAt(i, 0).toString().equalsIgnoreCase(cmbtalla.getSelectedItem().toString())){
+                            existe = true;
+                            break;
+                        }
+                    }
+                    if (!existe) {
+                        Object[] row = { cmbtalla.getSelectedItem(), existencias};
+                        model.addRow(row); 
+                    }
+                    else{
+                      JOptionPane.showMessageDialog(null, "Ya tienes esta talla registradas");
+                    }
+
+                }catch(NumberFormatException e)
+                {
+                    JOptionPane.showMessageDialog(null, "Debes ingresar un valor numerico en las existencias");
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "No puedes agregar existencias negativas");
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una talla");
+        }
+    }//GEN-LAST:event_btbagregartallaActionPerformed
+
+    private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
+        MostrarOcultarComponentes(true);
+    }//GEN-LAST:event_btnvolverActionPerformed
+
+    private void btnlimpiartallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiartallasActionPerformed
+        LimpiarTablaTallas();
+    }//GEN-LAST:event_btnlimpiartallasActionPerformed
+
+    private void MostrarOcultarComponentes(boolean accion){
+        jLabel5.setVisible(accion);
+        rbmasculino.setVisible(accion);
+        rbfemenino.setVisible(accion);
+        jLabel7.setVisible(accion);
+        jLabel9.setVisible(accion);
+        cmbtipo1.setVisible(accion);
+        txtmarca.setVisible(accion);
+        btnAgregar.setVisible(accion);
+        btnEliminar.setVisible(accion);
+        btnLimpiar.setVisible(accion);
+        btnModificar.setVisible(accion);
+        btnseleccionartalla.setVisible(accion);
+        jLabel3.setVisible(accion);
+        txtpreciocosto.setVisible(accion);
+        jLabel6.setVisible(accion);
+        txtprecioventa.setVisible(accion);
+        
+        btbagregartalla.setVisible(!accion);
+        txtexistencias.setVisible(!accion);
+        jLabel4.setVisible(!accion);
+        cmbtalla.setVisible(!accion);
+        jScrollPane3.setVisible(!accion);
+        btnvolver.setVisible(!accion);
+        jLabel11.setVisible(!accion);
+        btnlimpiartallas.setVisible(!accion);
+    }
     private void Limpiar()
     {
         txtnombre.setText("");
         txtdescripcion.setText("");
-        txtprecio.setText("");
-        txtcantidad.setText("");
+        txtpreciocosto.setText("");
         cmbtalla.setSelectedItem("Seleccione");
         txtmarca.setText("");
         btnGr.clearSelection();
         btnGr1.clearSelection();
-        cmbtipoI.setSelectedItem("Seleccione");
-        cmbtipoS.setSelectedItem("Seleccione");
-        cmbtipoI.setVisible(false);
-        cmbtipoS.setVisible(false);
         cmbtipo1.setVisible(true);
         txtid.setText("");
+        cmbtalla.removeAllItems();
+        cmbtalla.addItem("Seleccione una clase");
+        cmbtalla.setSelectedItem("Seleccione una clase");
+        cmbtipo1.addItem("Seleccione una clase de prenda primero");
+        cmbtipo1.setSelectedItem("Seleccione una clase de prenda primero");
+        txtexistencias.setText("");
+        txtprecioventa.setText("");
+        LimpiarTablaTallas();
+    }
+    
+    private void LimpiarTablaTallas()
+    {
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int a = jTable1.getRowCount()-1;
+        for (int i = a; i >= 0; i--) 
+        {          
+            tb.removeRow(tb.getRowCount()-1);
+        }
+        txtexistencias.setText("");
     }
     
     private void CargarTabla()
@@ -955,7 +1325,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         ResultSetMetaData rsmd;
         int columnas;
         //724 tamano tabla de forma horizontal
-        int[] anchos = {30,100,150,40,30,60,40,70,80,124};
+        int[] anchos = {40,100,150,50,50,50,60,70,80,110};
         for(int i = 0; i<tablaropa.getColumnCount(); i++)
         {
             tablaropa.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
@@ -963,18 +1333,25 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         try
         {
             Connection con = Conexion.getCon();
-            String consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa";
+            //String consultaSQL = "SELECT idropa, nombre, descripcion, precio, genero, marca FROM ropa";
+            String consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda ";
             ps = con.prepareStatement(consultaSQL);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
+            Object[] fila = new Object[columnas];
             while(rs.next())
             {
-                Object[] fila = new Object[columnas];
-                for(int indice=0; indice<columnas; indice++)
-                {
-                    fila[indice] = rs.getObject(indice+1);
-                }
+                fila[0] = rs.getInt(1);
+                fila[1] = rs.getString(2);
+                fila[2] = rs.getString(3);
+                fila[3] = rs.getDouble(4);
+                fila[4] = rs.getDouble(5);
+                fila[5] = rs.getDouble(6);
+                fila[6] = rs.getString(7);
+                fila[7] = rs.getString(8);
+                fila[8] = rs.getString(9);
+                fila[9] = rs.getString(10);
                 modelotabla.addRow(fila);
             }
         }
@@ -1013,24 +1390,87 @@ public class CRUD_Ropa extends javax.swing.JFrame {
             public void run() {
                 new CRUD_Ropa(null).setVisible(true);
             }
-        });
+        }); 
     }
-
+    
+     private int traerIDTipoPrenda(String nombre,int clase){
+        PreparedStatement ps = null;
+        Connection con = Conexion.getCon();
+        ResultSet rs;
+        String consultaSQL = "Select idTipoPrenda from TipoPrenda where nombre=? and idclaseprenda=? ;";
+        try
+        {
+          ps=con.prepareStatement(consultaSQL);
+          ps.setString(1, nombre);
+          ps.setInt(2, clase);
+          rs = ps.executeQuery();
+          if(rs.next()){
+              return rs.getInt(1);
+          }
+          return -1;
+        }catch(SQLException ex)
+        {
+            Logger.getLogger(SQL_Usuarios.class.getName()).log(Level.SEVERE, null,ex);
+            return -1;
+        }
+     }
+     private int traerIDTalla(String nombre,int clase){
+         PreparedStatement ps = null;
+        Connection con = Conexion.getCon();
+        ResultSet rs;
+        String consultaSQL = "Select idtalla from Tallas where nombre=? and idclasePrenda=? ;";
+        try
+        {
+          ps=con.prepareStatement(consultaSQL);
+          ps.setString(1, nombre);
+          ps.setInt(2, clase);
+          rs = ps.executeQuery();
+          if(rs.next()){
+              return rs.getInt(1);
+          }
+          return -1;
+        }catch(SQLException ex)
+        {
+            Logger.getLogger(SQL_Usuarios.class.getName()).log(Level.SEVERE, null,ex);
+            return -1;
+        }
+     }
+      private int traerUltimoIDRopa(){
+         PreparedStatement ps = null;
+        Connection con = Conexion.getCon();
+        ResultSet rs;
+        String consultaSQL = "Select MAX(idropa) from ropa;";
+        try
+        {
+          ps=con.prepareStatement(consultaSQL);
+          rs = ps.executeQuery();
+          if(rs.next()){
+              return rs.getInt(1);
+          }
+          return -1;
+        }catch(SQLException ex)
+        {
+            Logger.getLogger(SQL_Usuarios.class.getName()).log(Level.SEVERE, null,ex);
+            return -1;
+        }
+     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btbagregartalla;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRestablecer;
     private javax.swing.JButton btnbuscar;
+    private javax.swing.JButton btnlimpiartallas;
+    private javax.swing.JButton btnseleccionartalla;
+    private javax.swing.JButton btnvolver;
     private javax.swing.JComboBox<String> cmbfiltro;
     private javax.swing.JComboBox<String> cmbtalla;
     private javax.swing.JComboBox<String> cmbtipo1;
-    private javax.swing.JComboBox<String> cmbtipoI;
-    private javax.swing.JComboBox<String> cmbtipoS;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1044,6 +1484,9 @@ public class CRUD_Ropa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JRadioButton rbcalzado;
     private javax.swing.JRadioButton rbfemenino;
     private javax.swing.JRadioButton rbinferior;
     private javax.swing.JRadioButton rbmasculino;
@@ -1051,11 +1494,12 @@ public class CRUD_Ropa extends javax.swing.JFrame {
     private javax.swing.JTable tablaropa;
     private javax.swing.JLabel txtVolver;
     private javax.swing.JTextField txtbuscar;
-    private javax.swing.JTextField txtcantidad;
     private javax.swing.JTextArea txtdescripcion;
+    private javax.swing.JTextField txtexistencias;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtmarca;
     private javax.swing.JTextField txtnombre;
-    private javax.swing.JTextField txtprecio;
+    private javax.swing.JTextField txtpreciocosto;
+    private javax.swing.JTextField txtprecioventa;
     // End of variables declaration//GEN-END:variables
 }

@@ -484,27 +484,27 @@ public class Crear_Cuenta extends javax.swing.JFrame {
                 }
                 else
                 {
-                    if(modSql.ExisteUsuario(hash.sha1(txtusuario.getText())) != 0)
+                    if(modSql.ExisteUsuario((txtusuario.getText())) != 0)
                     {
                        JOptionPane.showMessageDialog(this, "El Usuario ingresado ya existe, intente con un nuevo nombre de usuario", "Registro", JOptionPane.ERROR_MESSAGE);
                     }
                     else
                     {
-                       if(modSql.ExisteCorreo(hash.sha1(txtcorreo.getText())) != 0)
+                       if(modSql.ExisteCorreo((txtcorreo.getText())) != 0)
                        {
                            JOptionPane.showMessageDialog(this, "El correo ingresado ya esta registrado en otra cuenta, intente ingresar un nuevo correo", "Registro", JOptionPane.ERROR_MESSAGE);
                        }
                        else
                         {
                         String usuario = txtusuario.getText();
-                        mod.setUsuario(hash.sha1(usuario));
+                        mod.setUsuario(usuario);
                         String clave = String.valueOf(txtcontra.getPassword());
                         mod.setContra(hash.sha1(clave));
                         String nombre = txtnombre.getText();
-                        mod.setNombre(hash.sha1(nombre));
+                        mod.setNombre((nombre));
                         String correo = txtcorreo.getText().toLowerCase();
-                        mod.setCorreo(hash.sha1(correo));
-                        mod.setId_tipo(2);
+                        mod.setCorreo(correo);
+                        mod.setId_tipo(1);
                         if(modSql.Registrar(mod))
                         {
                            JOptionPane.showMessageDialog(this, "Cuenta creada con exito", "Registro", JOptionPane.INFORMATION_MESSAGE);
