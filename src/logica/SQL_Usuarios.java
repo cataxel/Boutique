@@ -30,6 +30,8 @@ public class SQL_Usuarios extends Conexion { //el Extends es importante
           ps.setString(4, usr.getCorreo());
           ps.setInt(5, usr.getId_tipo());
           ps.execute();
+          //ps.close();
+          //con.close();
           return true;
         }catch(SQLException ex)
         {
@@ -53,6 +55,8 @@ public class SQL_Usuarios extends Conexion { //el Extends es importante
           {
               return rs.getInt(1);
           }
+          //ps.close();
+          //rs.close();
           return 1;
         }catch(SQLException ex)
         {
@@ -66,17 +70,17 @@ public class SQL_Usuarios extends Conexion { //el Extends es importante
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = getConexion();
-        String consultaSQL = "SELECT u.idusuario, u.usuario, u.contra, u.nombre, u.id_tipo, t.nombre from usuarios AS u INNER JOIN tipo_usuarios AS t ON u.id_tipo = t.idtipo_usuarios WHERE usuario = ?";
+        String consultaSQL = "SELECT u.idusuario, u.usuario, u.contra, u.nombre, u.id_tipo, t.nombre from usuarios u INNER JOIN tipo_usuarios t ON u.id_tipo = t.idtipo_usuarios WHERE u.usuario =?";
         try
         {
           ps=con.prepareStatement(consultaSQL);
           ps.setString(1, usr.getUsuario());
           rs = ps.executeQuery();
           if(rs.next())
-          {
+          {          
               if(usr.getContra().equals(rs.getString(3)))
               {
-                  String consultaSQLUpdate = "UPDATE usuarios SET last_session = ? WHERE idusuario=?";
+                  String consultaSQLUpdate = "UPDATE usuarios SET last_session = ? WHERE idusuario = ?";
                   ps = con.prepareStatement(consultaSQLUpdate);
                   ps.setString(1, usr.getLast_session());
                   ps.setInt(2, rs.getInt(1));
@@ -96,6 +100,7 @@ public class SQL_Usuarios extends Conexion { //el Extends es importante
         }catch(SQLException ex)
         {
             Logger.getLogger(SQL_Usuarios.class.getName()).log(Level.SEVERE, null,ex);
+            ex.printStackTrace();
             return false;
         }
     }

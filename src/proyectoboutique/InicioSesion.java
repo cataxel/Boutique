@@ -269,7 +269,7 @@ public class InicioSesion extends javax.swing.JFrame {
         String contra = new String(txtcontra.getPassword());
         if(!(txtusuario.getText().equals("")) && !(contra.equals("")))
         {
-            mod.setUsuario(hash.sha1(txtusuario.getText()));
+            mod.setUsuario(txtusuario.getText());
             mod.setContra(hash.sha1(contra));
             mod.setLast_session(fecha_hora.format(date));
             if(modSql.Login(mod))
