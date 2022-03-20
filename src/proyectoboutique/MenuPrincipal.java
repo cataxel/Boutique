@@ -16,6 +16,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public static InicioSesion frmLog;
     public static Crear_Cuenta frmReg;
     public static CRUD_Ropa frmCRopa;
+    public static CRUD_Usuarios frmCusers;
     Usuario mod;
     
        
@@ -52,6 +53,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuProovedores.setVisible(false);
         menuRopaAd.setVisible(false);
         submenuInfoUsuario.setVisible(false);
+        submenugestionusers.setVisible(false);
             //mod aun no ha iniciado sesion y unicamente vas a mostrar los paneles o 
             // o opciones que no requieres de que el mod este inicializado
         }
@@ -77,6 +79,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         submenuInicioSesion = new javax.swing.JMenuItem();
         submenuRegistrar = new javax.swing.JMenuItem();
         submenuInfoUsuario = new javax.swing.JMenuItem();
+        submenugestionusers = new javax.swing.JMenuItem();
         menuRopaAd = new javax.swing.JMenu();
         submenuRopaGestion = new javax.swing.JMenuItem();
         menuProovedores = new javax.swing.JMenu();
@@ -199,6 +202,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         submenuInfoUsuario.setText("Informacion del usuario");
         menuusuario.add(submenuInfoUsuario);
 
+        submenugestionusers.setText("Gestion de usuarios");
+        submenugestionusers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenugestionusersActionPerformed(evt);
+            }
+        });
+        menuusuario.add(submenugestionusers);
+
         menuBar.add(menuusuario);
 
         menuRopaAd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ropaicon.png"))); // NOI18N
@@ -224,11 +235,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -292,6 +303,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submenuRopaGestionActionPerformed
 
+    private void submenugestionusersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenugestionusersActionPerformed
+        if(frmCusers == null)
+        {
+            frmCusers = new CRUD_Usuarios(mod);
+            frmCusers.setVisible(true);
+        }
+    }//GEN-LAST:event_submenugestionusersActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -347,6 +366,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem submenuInicioSesion;
     private javax.swing.JMenuItem submenuRegistrar;
     private javax.swing.JMenuItem submenuRopaGestion;
+    private javax.swing.JMenuItem submenugestionusers;
     // End of variables declaration//GEN-END:variables
 
 }

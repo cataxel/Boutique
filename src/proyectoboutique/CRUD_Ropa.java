@@ -968,46 +968,39 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 String filtro = cmbfiltro.getSelectedItem().toString();
                 if(filtro.equals("Id"))
                 {
-                    consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE idropa = '"+busqueda+"' ";
+                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.idropa = '"+busqueda+"' ";
                 }else
                 {
                     if(filtro.equals("Nombre"))
                     {
-                        consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE nombre like '%"+busqueda+"%' ";
+                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.nombre like '%"+busqueda+"%' ";
                     }else
                     {
-                        if(filtro.equals("Talla"))
-                        {
-                            consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE talla = '"+busqueda+"' ";
-                        }
-                        else
-                        {
                             if(filtro.equals("Genero"))
                             {
-                                consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE genero like '%"+busqueda+"%' ";
+                                consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.genero like '%"+busqueda+"%' ";
                             }
                             else
                             {
                                 if(filtro.equals("Marca"))
                                 {
-                                    consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE marca like '%"+busqueda+"%' ";
+                                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda  WHERE r.marca like '%"+busqueda+"%' ";
                                 }
                                 else
                                 {
                                     if(filtro.equals("Clase"))
                                     {
-                                        consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE clase like '%"+busqueda+"%' ";
+                                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE cp.nombre like '%"+busqueda+"%' ";
                                     }
                                     else
                                     {
                                         if(filtro.equals("Tipo"))
                                         {
-                                            consultaSQL = "SELECT idropa, nombre, descripcion, precio, talla, genero, cantidad, marca, clase, tipo FROM ropa WHERE tipo like '%"+busqueda+"%' ";
+                                            consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE tp.nombre like '%"+busqueda+"%' ";
                                         }
                                     }
                                 }
                             }
-                        }
                     }
                 }
                 ps = con.prepareStatement(consultaSQL);
@@ -1065,7 +1058,7 @@ public class CRUD_Ropa extends javax.swing.JFrame {
         else
         {
         int columnas;
-        int[] anchos = {50,100,150,60,60,80,90,124};
+        int[] anchos = {30,100,150,40,30,60,40,70,80,124};
         for(int i = 0; i<tablaropa.getColumnCount(); i++)
         {
             tablaropa.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
@@ -1077,35 +1070,35 @@ public class CRUD_Ropa extends javax.swing.JFrame {
                 String filtro = cmbfiltro.getSelectedItem().toString();
                 if(filtro.equals("Id"))
                 {
-                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.idropa = '"+busqueda+"' ";
+                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.idropa = '"+busqueda+"' ";
                 }else
                 {
                     if(filtro.equals("Nombre"))
                     {
-                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.nombre like '%"+busqueda+"%' ";
+                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.nombre like '%"+busqueda+"%' ";
                     }else
                     {
                             if(filtro.equals("Genero"))
                             {
-                                consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.genero like '%"+busqueda+"%' ";
+                                consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.genero like '%"+busqueda+"%' ";
                             }
                             else
                             {
                                 if(filtro.equals("Marca"))
                                 {
-                                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.marca like '%"+busqueda+"%' ";
+                                    consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE r.marca like '%"+busqueda+"%' ";
                                 }
                                 else
                                 {
                                     if(filtro.equals("Clase"))
                                     {
-                                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE cp.nombre like '%"+busqueda+"%' ";
+                                        consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE cp.nombre like '%"+busqueda+"%' ";
                                     }
                                     else
                                     {
                                         if(filtro.equals("Tipo"))
                                         {
-                                            consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE tp.nombre like '%"+busqueda+"%' ";
+                                            consultaSQL = "SELECT DISTINCT r.idropa, r.nombre, r.descripcion, r.precio_costo, r.precio_venta, r.ganancia, r.genero, r.marca, cp.nombre, tp.nombre FROM ropa r INNER JOIN ropa_talla rp ON r.idropa = rp.idropa INNER JOIN Tallas t ON rp.idtalla=t.idtalla INNER JOIN ClasePrenda cp ON t.idclasePrenda=cp.idClasePrenda INNER JOIN TipoPrenda tp ON r.idtipoprenda = tp.idTipoPrenda WHERE tp.nombre like '%"+busqueda+"%' ";
                                         }
                                     }
                                 }

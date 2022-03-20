@@ -504,7 +504,7 @@ public class Crear_Cuenta extends javax.swing.JFrame {
                         mod.setNombre((nombre));
                         String correo = txtcorreo.getText().toLowerCase();
                         mod.setCorreo(correo);
-                        mod.setId_tipo(1);
+                        mod.setId_tipo(2);
                         if(modSql.Registrar(mod))
                         {
                            JOptionPane.showMessageDialog(this, "Cuenta creada con exito", "Registro", JOptionPane.INFORMATION_MESSAGE);
