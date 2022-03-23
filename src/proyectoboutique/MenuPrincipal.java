@@ -146,7 +146,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         desktopPane.add(jPanel1);
         jPanel1.setBounds(0, 0, 400, 280);
 
-        menuDama.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/th.png"))); // NOI18N
+        menuDama.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconosmenuP/mujer.png"))); // NOI18N
         menuDama.setText("Dama");
         menuDama.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         menuDama.setIconTextGap(0);
@@ -157,7 +157,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         menuBar.add(menuDama);
 
-        menuCaballero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hombre.png"))); // NOI18N
+        menuCaballero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconosmenuP/hombre.png"))); // NOI18N
         menuCaballero.setText("Caballero");
         menuCaballero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,7 +166,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         menuBar.add(menuCaballero);
 
-        menuContacto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/contacto.png"))); // NOI18N
+        menuContacto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconosmenuP/contacto.png"))); // NOI18N
         menuContacto.setText("Contacto");
         menuContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -175,7 +175,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         menuBar.add(menuContacto);
 
-        menuusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
+        menuusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconosmenuP/usuario.png"))); // NOI18N
         menuusuario.setText("Usuario");
         menuusuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,7 +212,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuusuario);
 
-        menuRopaAd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ropaicon.png"))); // NOI18N
+        menuRopaAd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconosmenuP/ropaicon.png"))); // NOI18N
         menuRopaAd.setText("Ropa");
 
         submenuRopaGestion.setText("Gestionar Ropa");
@@ -225,7 +225,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuRopaAd);
 
-        menuProovedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/provedores.png"))); // NOI18N
+        menuProovedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconosmenuP/provedores.png"))); // NOI18N
         menuProovedores.setText("Proovedores");
         menuBar.add(menuProovedores);
 
@@ -239,7 +239,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
         );
 
         pack();

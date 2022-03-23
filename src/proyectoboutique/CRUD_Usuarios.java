@@ -69,7 +69,6 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
         txtusuario = new javax.swing.JTextField();
         bttagregar = new javax.swing.JButton();
         btteliminar = new javax.swing.JButton();
-        bttactualizar = new javax.swing.JButton();
         bttmodificar = new javax.swing.JButton();
         bttlimpiar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -147,10 +146,18 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
         });
 
         btteliminar.setText("Eliminar");
-
-        bttactualizar.setText("Actualizar");
+        btteliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btteliminarActionPerformed(evt);
+            }
+        });
 
         bttmodificar.setText("Modificar");
+        bttmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttmodificarActionPerformed(evt);
+            }
+        });
 
         bttlimpiar.setText("Limpiar");
 
@@ -190,23 +197,18 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(checkboxadmin)
-                            .addComponent(bttactualizar)
-                            .addComponent(bttmodificar))
-                        .addGap(1, 1, 1)
+                            .addComponent(bttmodificar)
+                            .addComponent(bttlimpiar))
+                        .addGap(2, 2, 2)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(checkboxusernormal)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(bttlimpiar)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(btteliminar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                        .addComponent(bttagregar)))
+                                .addComponent(btteliminar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                .addComponent(bttagregar)
                                 .addGap(8, 8, 8)))))
                 .addContainerGap())
         );
@@ -239,12 +241,10 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bttagregar)
                     .addComponent(btteliminar)
-                    .addComponent(bttactualizar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bttmodificar)
-                    .addComponent(bttlimpiar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bttmodificar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(bttlimpiar)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Fira Sans", 3, 14))); // NOI18N
@@ -362,11 +362,11 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                         mod.setUsuario(usuario);
                         boolean tipo = checkboxusernormal.isSelected();
                         if(tipo==true){
-                            resultado = 1;
+                            resultado = 2;
                             mod.setId_tipo(resultado);
                         }
                         else{
-                            resultado = 2;
+                            resultado = 1;
                             mod.setId_tipo(resultado);
                         }
                         
@@ -382,6 +382,110 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_bttagregarActionPerformed
+
+    private void btteliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btteliminarActionPerformed
+        int id = 0;
+        try
+        {
+            id = Integer.parseInt(txtID.getText());
+        }catch(NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(null, "Seleccione un elemento de la tabla para obtener un id");
+        }
+        if(!txtID.getText().equals(""))
+        {
+            DefaultTableModel model = (DefaultTableModel) tablausuarios.getModel();
+                if(model.getRowCount()>0){/*
+                        for (int i = 0; i<model.getRowCount(); i++) {
+                        final String col1 = (String) model.getValueAt(i, 0);
+                        final String col2 = (String) model.getValueAt(i, 1);
+                        System.out.println("Talla: " + col1 + " Existencia: " + col2);
+                    }*/
+             //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+             /*if(model.getRowCount()>0){
+                SQL_Ropa_Tallas sqlropatallas = new SQL_Ropa_Tallas();
+                for (int i = 0; i<model.getRowCount(); i++) 
+                {
+                    Ropa_Tallas rt =new Ropa_Tallas();
+                    rt.setIdropa(id);
+                    rt.setIdtalla(traerIDTalla((String) model.getValueAt(i, 0), 0));
+                    rt.setExistencias(Integer.parseInt(model.getValueAt(i, 1).toString()));
+                    sqlropatallas.Eliminar(id);
+                }
+             }*/
+            try
+            {
+                Connection con = Conexion.getCon();
+                PreparedStatement ps = con.prepareStatement("DELETE FROM usuarios WHERE idusuario=?");
+                ps.setInt(1, Integer.parseInt(txtID.getText()));
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Registro eliminado", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                Limpiar();
+                CargarTabla();
+            }
+            catch(SQLException e)
+            {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el registro", "Registro", JOptionPane.ERROR_MESSAGE);
+            }
+            }
+        }
+    }//GEN-LAST:event_btteliminarActionPerformed
+
+    private void bttmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttmodificarActionPerformed
+        int id = 0;
+        int resultado = 0;
+        boolean ban = false;
+        try {
+            id = Integer.parseInt(txtID.getText());
+            ban = true;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Seleccione un elemento de la tabla para obtener un id");
+        }
+        SQL_Usuario modSql = new SQL_Usuario();
+        Usuario mod = new Usuario();
+        String usuario = txtusuario.getText();
+        if (ban) {
+            if (usuario.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debes de ingresar un nombre a la prenda");
+            } else {
+                mod.setUsuario(usuario);
+                String contra = txtContraseña.getText();
+                if (contra.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Debes de ingresar una contraseña");
+                } else {
+                    mod.setContra(contra);
+                    String nombre = txtNombre.getText();
+                    if (nombre.equals("")) {
+                        JOptionPane.showMessageDialog(null, "Debe ingresar un nombre");
+                    } else {
+                        mod.setNombre(nombre);
+                        String correo = txtCorreo.getText();
+                        if (correo.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Debe ingresar un correo");
+                        } else {
+                            mod.setCorreo(correo);
+                            boolean tipo = checkboxusernormal.isSelected();
+                            if (tipo == true) {
+                                resultado = 2;
+                                mod.setId_tipo(resultado);
+                            } else {
+                                resultado = 1;
+                                mod.setId_tipo(resultado);
+                            }
+                            DefaultTableModel model = (DefaultTableModel) tablausuarios.getModel();
+                            if (modSql.Modificar(mod)) {
+                                JOptionPane.showMessageDialog(this, "Cuenta creada con exito", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                                Limpiar();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Error al guardar la cuenta", "Registro", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_bttmodificarActionPerformed
 
     private void Limpiar(){
         txtNombre.setText("");
@@ -470,7 +574,6 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Volver;
-    private javax.swing.JButton bttactualizar;
     private javax.swing.JButton bttagregar;
     private javax.swing.JButton btteliminar;
     private javax.swing.JButton bttlimpiar;
