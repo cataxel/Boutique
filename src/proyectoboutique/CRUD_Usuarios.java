@@ -72,7 +72,7 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
         bttmodificar = new javax.swing.JButton();
         bttlimpiar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        buscarBox = new javax.swing.JComboBox<>();
+        filtro = new javax.swing.JComboBox<>();
         txtbuscar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
@@ -160,6 +160,11 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
         });
 
         bttlimpiar.setText("Limpiar");
+        bttlimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttlimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -249,7 +254,13 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Fira Sans", 3, 14))); // NOI18N
 
-        buscarBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Nombre usuario", "Correo", "Tipo Usuario" }));
+        filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Nombre usuario", "Correo", "Tipo Usuario" }));
+
+        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyReleased(evt);
+            }
+        });
 
         jButton1.setText("Restablecer Tabla");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -265,7 +276,7 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buscarBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filtro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtbuscar)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -274,7 +285,7 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(buscarBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(filtro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
@@ -487,6 +498,65 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bttmodificarActionPerformed
 
+    private void bttlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttlimpiarActionPerformed
+        Limpiar();
+    }//GEN-LAST:event_bttlimpiarActionPerformed
+
+    private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyReleased
+        DefaultTableModel modelotabla = (DefaultTableModel) tablausuarios.getModel();
+        modelotabla.setRowCount(0);
+        PreparedStatement ps;
+        ResultSet rs;
+        ResultSetMetaData rsmd;
+        String busqueda = txtbuscar.getText();
+        if (busqueda.trim().equals("")) {
+            CargarTabla();
+        } else {
+            int columnas;
+            int[] anchos = {30, 100, 150, 40, 30, 60, 40, 70, 80, 124};
+            for (int i = 0; i < tablausuarios.getColumnCount(); i++) {
+                tablausuarios.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+            }
+            try {
+                Connection con = Conexion.getCon();
+                String consultaSQL = "";
+                String filtro = this.filtro.getSelectedItem().toString();
+                if (filtro.equals("ID")) {
+                    consultaSQL = "SELECT * FROM usuarios WHERE idusuario = '" + busqueda + "' ";
+                } else {
+                    if (filtro.equals("Nombre")) {
+                        consultaSQL = "SELECT * FROM usuarios WHERE nombre like '%" + busqueda + "%' ";
+                    } else {
+                        if (filtro.equals("Correo")) {
+                            consultaSQL = "SELECT * FROM usuarios WHERE correo like '%" + busqueda + "%' ";
+                        } else {
+                            if (filtro.equals("Nombre usuario")) {
+                                consultaSQL = "SELECT * from usuarios WHERE usuario like '%" + busqueda + "%' ";
+                            } else {
+                                if (filtro.equals("Tipo de Usuario")) {
+                                    consultaSQL = "SELECT * FROM usuarios WHERE id_tipo = '" + busqueda + "' ";
+                                }
+                            }
+                        }
+                    }
+                }
+                ps = con.prepareStatement(consultaSQL);
+                rs = ps.executeQuery();
+                rsmd = rs.getMetaData();
+                columnas = rsmd.getColumnCount();
+                while (rs.next()) {
+                    Object[] fila = new Object[columnas];
+                    for (int indice = 0; indice < columnas; indice++) {
+                        fila[indice] = rs.getObject(indice + 1);
+                    }
+                    modelotabla.addRow(fila);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+    }//GEN-LAST:event_txtbuscarKeyReleased
+
     private void Limpiar(){
         txtNombre.setText("");
         txtCorreo.setText("");
@@ -578,11 +648,11 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
     private javax.swing.JButton btteliminar;
     private javax.swing.JButton bttlimpiar;
     private javax.swing.JButton bttmodificar;
-    private javax.swing.JComboBox<String> buscarBox;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JCheckBox checkboxadmin;
     private javax.swing.JCheckBox checkboxusernormal;
+    private javax.swing.JComboBox<String> filtro;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
