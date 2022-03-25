@@ -99,6 +99,11 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                 "ID", "Nombre", "Contraseña", "Correo", "Nombre Usuario", "Tipo Usuario"
             }
         ));
+        tablausuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablausuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablausuarios);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -254,7 +259,7 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Fira Sans", 3, 14))); // NOI18N
 
-        filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Nombre usuario", "Correo", "Tipo Usuario" }));
+        filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Nombre usuario", "Correo" }));
 
         txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -533,9 +538,9 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                             if (filtro.equals("Nombre usuario")) {
                                 consultaSQL = "SELECT * from usuarios WHERE usuario like '%" + busqueda + "%' ";
                             } else {
-                                if (filtro.equals("Tipo de Usuario")) {
+                                /*if (filtro.equals("Tipo de Usuario")) {
                                     consultaSQL = "SELECT * FROM usuarios WHERE id_tipo = '" + busqueda + "' ";
-                                }
+                                }*/
                             }
                         }
                     }
@@ -556,6 +561,62 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtbuscarKeyReleased
+
+    private void tablausuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablausuariosMouseClicked
+         try
+        {
+            int fila = tablausuarios.getSelectedRow();
+            int id = Integer.parseInt(tablausuarios.getValueAt(fila, 0).toString());
+            PreparedStatement ps, ps2;
+            ResultSet rs, rs2;
+            ResultSetMetaData rsm;
+            Connection con = Conexion.getCon();
+            Connection con2 = Conexion.getCon();
+            String consultaSQL = "SELECT idusuario, nombre, contra, correo, usuario, id_tipo FROM usuarios WHERE idusuario= ? ";
+            //String consulta_talla = "SELECT t.nombre, rt.existencias FROM Tallas t INNER JOIN ropa_talla rt ON t.idtalla = rt.idtalla INNER JOIN ropa r ON rt.idropa = r.idropa WHERE r.idropa=?";
+            ps=con.prepareStatement(consultaSQL);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                txtID.setText(String.valueOf(id));
+                txtNombre.setText(rs.getString(2));
+                txtContraseña.setText(rs.getString(3));
+                txtCorreo.setText(rs.getString(4));
+                txtusuario.setText(rs.getString(5));
+                //cmbtalla.setSelectedItem(rs.getString("talla"));
+                if(rs.getString(6).equals("1")) //admin 1 , otro 2
+                {
+                    checkboxadmin.setSelected(true);
+                }else if(rs.getString(6).equals("2"))
+                {
+                    checkboxusernormal.setSelected(true);
+                }
+                
+                
+                DefaultTableModel modelotabla = (DefaultTableModel) tablausuarios.getModel();
+                modelotabla.setRowCount(0);
+                //ps2 = con2.prepareStatement(consulta_talla);
+                //ps2.setInt(1, id);
+                //rs2 = ps2.executeQuery();
+                //rsm = rs2.getMetaData();
+                //int columnas = rsm.getColumnCount();;
+                //while(rs2.next())
+               /*{
+                    Object[] fila2 = new Object[columnas];
+                    for(int indice=0; indice<columnas; indice++)
+                    {
+                        fila2[indice] = rs2.getObject(indice+1);
+                    }
+                    modelotabla.addRow(fila2);
+                }*/
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_tablausuariosMouseClicked
 
     private void Limpiar(){
         txtNombre.setText("");
