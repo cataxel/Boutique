@@ -44,7 +44,7 @@ public class SQL_Usuario extends Conexion {
     {
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String consultaSQL = "UPDATE usuario SET usuario = ?, contra = ?, nombre = ?,id_tipo = ? WHERE idusuario = ?";
+        String consultaSQL = "UPDATE usuarios SET usuario = ?, contra = ?, nombre = ?,id_tipo = ? WHERE idusuario = ?;";
         try
         {
           ps=con.prepareStatement(consultaSQL);
@@ -52,6 +52,7 @@ public class SQL_Usuario extends Conexion {
           ps.setString(2, usr.getContra());
           ps.setString(3, usr.getNombre());
           ps.setInt(4, usr.getId_tipo());
+          ps.setInt(5,usr.getIdusuario());
           
           ps.executeUpdate();
           return true;

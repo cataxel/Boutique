@@ -28,6 +28,7 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
      */
     ButtonGroup btnGr;
     private Usuario user;
+    
     public CRUD_Usuarios(Usuario user) {
         
         this.user=user;
@@ -354,14 +355,14 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
             else
             {
                 mod.setCorreo(correo);               
-                try{
-                    int id = Integer.parseInt(txtID.getText());
-                    mod.setId_tipo(id);
+                //try{
+                    //int id = Integer.parseInt(txtID.getText());
+                    //mod.setId_tipo(id);
                     
-                }catch(NumberFormatException e)
-                {
-                    JOptionPane.showMessageDialog(null, "Debes ingresar un numero");
-                }
+                //}catch(NumberFormatException e)
+                //{
+                  //  JOptionPane.showMessageDialog(null, "Debes ingresar un numero");
+                //}
                 String contra = txtContraseña.getText();
                 if(contra.equals(""))
                 {
@@ -488,9 +489,10 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                                 resultado = 1;
                                 mod.setId_tipo(resultado);
                             }
-                            DefaultTableModel model = (DefaultTableModel) tablausuarios.getModel();
+                            mod.setIdusuario(Integer.parseInt(txtID.getText()));
+                            DefaultTableModel model = (DefaultTableModel) tablausuarios.getModel();                        
                             if (modSql.Modificar(mod)) {
-                                JOptionPane.showMessageDialog(this, "Cuenta creada con exito", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "Cuenta actualizado con exito", "Registro", JOptionPane.INFORMATION_MESSAGE);
                                 Limpiar();
                             } else {
                                 JOptionPane.showMessageDialog(this, "Error al guardar la cuenta", "Registro", JOptionPane.ERROR_MESSAGE);
@@ -596,6 +598,7 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                 
                 DefaultTableModel modelotabla = (DefaultTableModel) tablausuarios.getModel();
                 modelotabla.setRowCount(0);
+                
                 //ps2 = con2.prepareStatement(consulta_talla);
                 //ps2.setInt(1, id);
                 //rs2 = ps2.executeQuery();
@@ -611,6 +614,7 @@ public class CRUD_Usuarios extends javax.swing.JFrame {
                     modelotabla.addRow(fila2);
                 }*/
             }
+            CargarTabla();
         }
         catch(SQLException e)
         {
